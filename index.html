@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ระบบจัดหน้าบันทึกข้อความ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one centred column — what it is, how to get in, the locked template values */
+:root{
+  --bg:#edf0f3; --panel:#ffffff; --sunk:#f5f7f9; --line:#d5dbe2; --fg:#18212b; --muted:#5a6673;
+  --accent:#1f4f7a; --accent-fg:#ffffff;
+  --ui:"IBM Plex Sans Thai","Sarabun","Leelawadee UI","Tahoma",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#11161c; --panel:#192029; --sunk:#141a21; --line:#2c3642; --fg:#e4e9ef; --muted:#97a3b0;
+  --accent:#7fb0e0; --accent-fg:#0d1722; color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--ui);font-size:16px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 56px}
+main{max-width:680px;margin:0 auto;display:grid;gap:20px}
+h1{font-size:1.6rem;font-weight:600;margin:0;text-wrap:balance}
+.lead{color:var(--muted);margin:4px 0 0}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:20px;display:grid;gap:14px}
+h2{font-size:1rem;font-weight:600;margin:0}
+ol{margin:0;padding-left:1.3em;display:grid;gap:6px}
+.btn{display:inline-flex;justify-content:center;align-items:center;padding:11px 20px;border-radius:7px;font-weight:600;text-decoration:none;background:var(--accent);color:var(--accent-fg);justify-self:start}
+.btn:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--line);font-weight:500}
+.row{display:flex;flex-wrap:wrap;gap:10px}
+.note{color:var(--muted);font-size:.9rem;margin:0}
+a{color:var(--accent)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+td{padding:6px 0;border-bottom:1px solid var(--line);vertical-align:top}
+td:last-child{font-family:var(--mono);font-size:.82rem;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums;padding-left:12px}
+tr:last-child td{border-bottom:0}
+.wrap-table{overflow-x:auto}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>ระบบจัดหน้าบันทึกข้อความ</h1>
+    <p class="lead">แปลง PDF ลงแม่แบบกลางเป็นไฟล์ Word ที่แก้ต่อได้ และแปลงไฟล์ Word เป็น PDF</p>
+  </header>
+
+  <section class="panel">
+    <h2>ต้องเข้าสู่ระบบ Claude ก่อนใช้งาน</h2>
+    <p class="note">ระบบนี้ใช้ Claude ในบัญชีของผู้ใช้แต่ละคนอ่านเอกสาร การอ่านเอกสารจึงใช้โควตาของบัญชีที่เข้าสู่ระบบ ไม่มีการใช้ API key หรือบัญชีกลาง</p>
+    <ol>
+      <li>เข้าสู่ระบบ claude.ai ด้วยบัญชีของคุณ (ถ้ายังไม่มีบัญชี สมัครได้ที่หน้าเดียวกัน)</li>
+      <li>กดปุ่ม "เปิดระบบใน Claude" ด้านล่าง</li>
+      <li>ครั้งแรกที่กดอ่านเอกสาร ระบบจะขออนุญาตใช้ Claude ให้กด "อนุญาต"</li>
+    </ol>
+    <div class="row">
+      <a class="btn" href="https://claude.ai/artifact/2sPzwD9QCAP85tgk1LUYfN" target="_blank" rel="noopener">เปิดระบบใน Claude</a>
+      <a class="btn ghost" href="https://claude.ai/login" target="_blank" rel="noopener">เข้าสู่ระบบ claude.ai</a>
+    </div>
+    <p class="note">ถ้าเปิดแล้วเห็นข้อความ "กรุณาเข้าสู่ระบบ Claude ก่อนใช้งาน" แปลว่ายังไม่ได้เข้าสู่ระบบในเบราว์เซอร์นั้น ให้เข้าสู่ระบบแล้วเปิดลิงก์อีกครั้ง</p>
+  </section>
+
+  <section class="panel">
+    <h2>แม่แบบกลางที่ล็อคค่าไว้</h2>
+    <div class="wrap-table"><table>
+      <tr><td>กระดาษ</td><td>A4 แนวตั้ง</td></tr>
+      <tr><td>กั้นบน / ล่าง</td><td>1.25 / 0.50 ซม.</td></tr>
+      <tr><td>กั้นซ้าย / ขวา</td><td>2.54 / 2.54 ซม.</td></tr>
+      <tr><td>ฟอนต์เนื้อความ</td><td>TH SarabunPSK 16 pt</td></tr>
+      <tr><td>ระยะบรรทัด</td><td>1 เท่า, ก่อน/หลัง 0</td></tr>
+      <tr><td>ย่อหน้าบรรทัดแรก</td><td>1.27 ซม.</td></tr>
+      <tr><td>คอลัมน์ โทร. / วันที่</td><td>9.00 ซม.</td></tr>
+      <tr><td>เลขหน้า</td><td>- n - เริ่มหน้า 2</td></tr>
+    </table></div>
+    <div class="row">
+      <a class="btn ghost" href="template/memo-template.dotx" download>ดาวน์โหลดแม่แบบ Word (.dotx)</a>
+    </div>
+  </section>
+</main>
+</body>
+</html>
